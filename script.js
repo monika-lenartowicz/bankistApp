@@ -159,6 +159,11 @@ btnLogin.addEventListener("click", function (e) {
 		calcDisplayBalance(currentAccount.movements);
 		//display summary
 		calcDisplaySummary(currentAccount);
+	} else {
+		labelWelcome.textContent = "Not correct: username or PIN";
+		labelWelcome.style.color = "red";
+		inputLoginUsername.value = "";
+		inputLoginPin.value = "";
 	}
 });
 
