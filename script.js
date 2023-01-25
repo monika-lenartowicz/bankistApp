@@ -114,6 +114,7 @@ const calcDisplaySummary = account => {
 
 	labelSumInterest.textContent = `${interest}€`;
 };
+
 // calcDisplaySummary(account1.movements);
 
 const createUsernames = accs => {
@@ -134,6 +135,9 @@ const createUsernames = accs => {
 };
 
 createUsernames(accounts);
+
+const deposits = movements.filter(mov => mov > 0);
+const withdrawals = movements.filter(mov => mov < 0);
 
 // Event handler
 const updateUi = currentAccount => {
@@ -190,8 +194,20 @@ btnTransfer.addEventListener("click", function (e) {
 	}
 });
 
-const deposits = movements.filter(mov => mov > 0);
-const withdrawals = movements.filter(mov => mov < 0);
+btnClose.addEventListener("click", function (e) {
+	e.preventDefault();
+	// clear inputs value
+
+	if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) {
+		const index = accounts.findIndex(account => account.username === currentAccount.username);
+		//delete account
+		accounts.splice(index, 1);
+		//hide UI
+		containerApp.style.opacity = 0;
+	}
+
+	inputCloseUsername.value = inputClosePin.value = "";
+});
 
 //reduce = accumulator → SNOWBALL
 
