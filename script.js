@@ -172,6 +172,12 @@ btnLogin.addEventListener("click", function (e) {
 		labelWelcome.style.color = "red";
 		inputLoginUsername.value = "";
 		inputLoginPin.value = "";
+		//display movements
+		displayMovements(currentAccount.movements);
+		//display balance
+		calcDisplayBalance(currentAccount.movements);
+		//display summary
+		calcDisplaySummary(currentAccount);
 	}
 });
 
