@@ -75,8 +75,10 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 containerMovements.innerHTML = "";
 console.log(containerMovements.innerHTML);
 /////////////////////////////////////////////////
-const displayMovements = function (movements) {
-	movements.forEach(function (movement, index) {
+const displayMovements = function (movements, sort = false) {
+	const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+	movs.forEach(function (movement, index) {
 		const type = movement > 0 ? "deposit" : "withdrawal";
 		const html = ` 
 			<div class='movements__row'>
@@ -221,6 +223,14 @@ btnClose.addEventListener("click", function (e) {
 
 	inputCloseUsername.value = inputClosePin.value = "";
 	labelWelcome.textContent = "Log in to get started";
+});
+
+let sorted = false;
+
+btnSort.addEventListener("click", function (e) {
+	e.preventDefault();
+	displayMovements(currentAccount.movements, !sorted);
+	sorted = !sorted;
 });
 
 //reduce = accumulator → SNOWBALL
