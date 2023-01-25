@@ -172,12 +172,7 @@ btnLogin.addEventListener("click", function (e) {
 		labelWelcome.style.color = "red";
 		inputLoginUsername.value = "";
 		inputLoginPin.value = "";
-		//display movements
-		displayMovements(currentAccount.movements);
-		//display balance
-		calcDisplayBalance(currentAccount.movements);
-		//display summary
-		calcDisplaySummary(currentAccount);
+		updateUi(currentAccount);
 	}
 });
 
@@ -213,6 +208,7 @@ btnClose.addEventListener("click", function (e) {
 	}
 
 	inputCloseUsername.value = inputClosePin.value = "";
+	labelWelcome.textContent = "Log in to get started";
 });
 
 //reduce = accumulator → SNOWBALL
