@@ -195,6 +195,18 @@ btnTransfer.addEventListener("click", function (e) {
 	}
 });
 
+btnLoan.addEventListener("click", function (e) {
+	e.preventDefault();
+	const amount = Number(inputLoanAmount.value);
+	if (amount > 0 && currentAccount.movements.some(mov => mov >= mov * 0.1)) {
+		// add movement
+		currentAccount.movements.push(amount);
+		// updateUi
+		updateUi(currentAccount);
+	}
+	inputLoanAmount.value = "";
+});
+
 btnClose.addEventListener("click", function (e) {
 	e.preventDefault();
 	// clear inputs value
@@ -223,3 +235,26 @@ const max = movements.reduce(
 );
 
 const account = accounts.find(account => account.owner === "Jessica Davis");
+
+//flat - could be used 2 or more levels deep
+const overallBalance = accounts
+	.map(account => account.movements)
+	.flat()
+	.reduce((acc, mov) => acc + mov, 0);
+
+console.log(overallBalance);
+
+//flatMap 1level deep
+const overallBalance2 = accounts
+	.map(account => account.movements)
+	.flat()
+	.reduce((acc, mov) => acc + mov, 0);
+
+console.log(overallBalance2);
+
+// const accountsMovements = accounts.map(account => account.movements);
+// console.log(accountsMovements);
+// const allMovements = accountsMovements.flat();
+// console.log(allMovements);
+// const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+// console.log(overallBalance);
