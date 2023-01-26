@@ -268,3 +268,40 @@ console.log(overallBalance2);
 // console.log(allMovements);
 // const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
 // console.log(overallBalance);
+
+///// NOTE -----EXERCISE ARRAY---- NOTE //////
+
+// 1.
+const bankDepositSum = accounts
+	.map(account => account.movements)
+	.flat()
+	.filter(el => el > 0)
+	.reduce((acc, dep) => acc + dep, 0);
+console.log(bankDepositSum);
+
+// 2.
+const numDeposit1000 = accounts
+	.map(account => account.movements)
+	.flat()
+	.filter(el => el >= 1000).length;
+console.log(numDeposit1000);
+
+const numDeposit1000a = accounts
+	.flatMap(account => account.movements)
+	.reduce((acc, cur) => (cur >= 1000 ? ++acc : acc), 0);
+
+console.log(numDeposit1000a);
+
+// 3.
+const sums = accounts
+	.flatMap(account => account.movements)
+	.reduce(
+		(sums, cur) => {
+			cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+			//sums = {deposits: 0, withdrawals:0}
+			return sums; //jeśli jest ciało funkcji strzałkowej to musi być return acc = tu akurat sums
+		},
+		{ deposits: 0, withdrawals: 0 }
+	);
+
+console.log(sums);
