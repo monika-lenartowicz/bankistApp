@@ -305,3 +305,20 @@ const sums = accounts
 	);
 
 console.log(sums);
+
+// 4.
+//this is the nice title → This Is A Nice title
+const convertTitleCase = function (title) {
+	const capitalize = string => string[0].toUpperCase() + string.slice(1);
+	const exceptions = ["a", "an", "the", "but", "or", "on", "with", "in", "and"];
+	const titleCase = title
+		.toLowerCase()
+		.split(" ")
+		.map(word => (exceptions.includes(word) ? word : capitalize(word)))
+		.join(" ");
+	return capitalize(title);
+};
+
+console.log(convertTitleCase("this is the nice title"));
+console.log(convertTitleCase("this is the nice title, but not to long"));
+console.log(convertTitleCase("and here is another title with an EXAMPLE"));
