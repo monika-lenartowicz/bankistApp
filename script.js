@@ -116,8 +116,8 @@ const currencies = new Map([
 
 /////////////////////////////////////////////////
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-containerMovements.innerHTML = "";
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// containerMovements.innerHTML = "";
 
 const displayMovements = function (movements, sort = false) {
 	const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
@@ -182,8 +182,8 @@ const createUsernames = accs => {
 
 createUsernames(accounts);
 
-const deposits = movements.filter(mov => mov > 0);
-const withdrawals = movements.filter(mov => mov < 0);
+// const deposits = movements.filter(mov => mov > 0);
+// const withdrawals = movements.filter(mov => mov < 0);
 
 // Event handler
 const updateUi = currentAccount => {
@@ -284,13 +284,13 @@ btnSort.addEventListener("click", function (e) {
 //reduce = accumulator → SNOWBALL
 
 //maximum balance__value
-const max = movements.reduce(
-	(acc, mov) => (acc > mov ? acc : mov),
-	movements[0]
-	// if (acc > mov) {
-	// 	return acc;
-	// } else return mov;
-);
+// const max = movements.reduce(
+// 	(acc, mov) => (acc > mov ? acc : mov),
+// 	movements[0]
+// 	if (acc > mov) {
+// 		return acc;
+// 	} else return mov;
+// );
 
 const account = accounts.find(account => account.owner === "Jessica Davis");
 
