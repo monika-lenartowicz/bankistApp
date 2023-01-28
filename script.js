@@ -72,9 +72,9 @@ const account2 = {
 		"2019-12-25T06:04:23.907Z",
 		"2020-01-25T14:18:46.235Z",
 		"2020-02-05T16:33:06.386Z",
-		"2020-04-10T14:43:26.374Z",
-		"2020-06-25T18:49:59.371Z",
-		"2020-07-26T12:01:20.894Z",
+		"2020-01-19T14:43:26.374Z",
+		"2023-01-25T18:49:59.371Z",
+		"2023-01-27T12:01:20.894Z",
 	],
 	currency: "USD",
 	locale: "en-US",
@@ -119,17 +119,30 @@ const currencies = new Map([
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // containerMovements.innerHTML = "";
 
+const formatMovementDate = function (date) {
+	const calcDayPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+
+	const daysPassed = calcDayPassed(new Date(), date);
+	console.log(daysPassed);
+	if (daysPassed === 0) return "Today";
+	if (daysPassed === 1) return "Yesterday";
+	if (daysPassed <= 7) return `${daysPassed} days ago`;
+
+	const numDay = `${date.getDate()}`.padStart(2, 0);
+	const month = `${date.getMonth() + 1}`.padStart(2, 0);
+	const year = date.getFullYear();
+
+	return `${numDay}/${month}/${year}`;
+};
+
 const displayMovements = function (account, sort = false) {
 	const movs = sort ? account.movements.slice().sort((a, b) => a - b) : account.movements;
 
 	movs.forEach(function (movement, index) {
 		const type = movement > 0 ? "deposit" : "withdrawal";
 		const date = new Date(account.movementsDates[index]);
-		const numDay = `${date.getDate()}`.padStart(2, 0);
-		const month = `${date.getMonth() + 1}`.padStart(2, 0);
-		const year = date.getFullYear();
+		const displayDate = formatMovementDate(date);
 
-		const displayDate = `${numDay}/${month}/${year}`;
 		const html = ` 
 			<div class='movements__row'>
 				<div class='movements__type movements__type--${type}'>${index + 1} ${type}</div>
@@ -227,6 +240,7 @@ btnLogin.addEventListener("click", function (e) {
 		const year = now.getFullYear();
 		const hours = `${now.getHours()}`.padStart(2, 0);
 		const min = `${now.getMinutes()}`.padStart(2, 0);
+
 		labelDate.textContent = `${numDay}/${month}/${year}, ${hours}:${min}`;
 
 		//clear inputs fields
