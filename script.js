@@ -117,7 +117,6 @@ const currencies = new Map([
 /////////////////////////////////////////////////
 
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-// containerMovements.innerHTML = "";
 
 const formatMovementDate = function (date, locale) {
 	const calcDayPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
@@ -144,6 +143,8 @@ const formatCurrency = (value, locale, currency) => {
 };
 
 const displayMovements = function (account, sort = false) {
+	containerMovements.innerHTML = "";
+
 	const movs = sort ? account.movements.slice().sort((a, b) => a - b) : account.movements;
 
 	movs.forEach(function (movement, index) {
