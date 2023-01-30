@@ -225,12 +225,40 @@ const updateUi = currentAccount => {
 	calcDisplaySummary(currentAccount);
 };
 
-let currentAccount;
+const startLogoutTimer = function () {
+	const timeGone = function () {
+		const min = String(Math.trunc(time / 60)).padStart(2, "0");
+		const sec = String(Math.trunc(time % 60)).padStart(2, "0");
+		//in each call , print the remaining time to UI
+		labelTimer.textContent = `${min}:${sec}`;
+
+		//when is 0, stop timer and logout user
+		if (time === 0) {
+			clearInterval(timer);
+			labelWelcome.textContent = "Log in to get started";
+			containerApp.style.opacity = 0;
+		}
+		//decrease 1s
+		time = time - 1;
+	};
+
+	//setting the time to 5 min
+	let time = 300;
+	//call the timer every seconds
+	timeGone();
+	const timer = setInterval(timeGone, 1000);
+
+	return timer;
+};
+
+/////////////////////////
+//// event handlers
+let currentAccount, timer;
 
 //fake always logged in
-currentAccount = account1;
-updateUi(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUi(currentAccount);
+// containerApp.style.opacity = 100;
 
 //experimented api
 
@@ -262,6 +290,9 @@ btnLogin.addEventListener("click", function (e) {
 		inputLoginPin.value = "";
 		inputClosePin.blur();
 
+		if (timer) clearInterval(timer);
+		timer = startLogoutTimer();
+
 		updateUi(currentAccount);
 	} else {
 		labelWelcome.textContent = "Not correct: username or PIN";
@@ -292,6 +323,10 @@ btnTransfer.addEventListener("click", function (e) {
 		currentAccount.movementsDates.push(new Date().toISOString());
 		receiverAccount.movementsDates.push(new Date().toISOString());
 		updateUi(currentAccount);
+
+		//reset timer
+		clearInterval(timer);
+		timer = startLogoutTimer();
 	}
 });
 
@@ -299,11 +334,16 @@ btnLoan.addEventListener("click", function (e) {
 	e.preventDefault();
 	const amount = Math.floor(inputLoanAmount.value);
 	if (amount > 0 && currentAccount.movements.some(mov => mov >= mov * 0.1)) {
-		// add movement
-		currentAccount.movements.push(amount);
-		currentAccount.movementsDates.push(new Date().toISOString());
-		// updateUi
-		updateUi(currentAccount);
+		setTimeout(function () {
+			// add movement
+			currentAccount.movements.push(amount);
+			currentAccount.movementsDates.push(new Date().toISOString());
+			// updateUi
+			updateUi(currentAccount);
+			//reset timer
+			clearInterval(timer);
+			timer = startLogoutTimer();
+		}, 4000);
 	}
 	inputLoanAmount.value = "";
 });
@@ -331,6 +371,13 @@ btnSort.addEventListener("click", function (e) {
 	displayMovements(currentAccount, !sorted);
 	sorted = !sorted;
 });
+
+setInterval(() => {
+	const now = new Date();
+	// console.log(now);
+}, 1000);
+
+clearInterval();
 
 //////////////////////////////////////////////
 ///// NOTE -----EXERCISE ARRAY---- NOTE //////
